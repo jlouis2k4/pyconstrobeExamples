@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34301.259
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TestPythonJS", "TestPythonJS.pyproj", "{67E0D5EC-C790-4B46-999F-8B5FF3732E63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67E0D5EC-C790-4B46-999F-8B5FF3732E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67E0D5EC-C790-4B46-999F-8B5FF3732E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {249BE10F-0848-4707-8CF3-A053DD74FC80}
+	EndGlobalSection
+EndGlobal

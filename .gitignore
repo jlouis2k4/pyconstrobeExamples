@@ -1,0 +1,64 @@
+# Qt Creator specific files
+*.pro.user
+*.pro.user.*
+*.pro.workspace
+*.moc
+
+# Build directories
+build-*/
+*/build-*
+debug/
+release/
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.ipch
+
+# CMake specific files (if applicable)
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Qt Creator's build directory (if using default settings)
+*.user
+*.user.*
+*.pro.*
+
+# Ignore moc generated files
+moc_*.cpp
+
+# Compiled binary files
+*.class
+*.log
+*.tmp
+*.pid
+
+# Version control system files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+.vs/                   # Ignore Visual Studio directory
+*.suo                  # Ignore Visual Studio Solution User Options files
+.suo
+*.sublime-workspace
+*.sublime-project
+*.db
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swm
+*.swo
+
+# Other
+*.stackdump
