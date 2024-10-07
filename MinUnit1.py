@@ -4,16 +4,16 @@ import json
 import textwrap
 import matplotlib.pyplot as plt
 from jsPy import ProcessManager
+import queue
+import time
 
-# Fixed path to executable
-# path_to_exe = r"C:\source\jStrobe\jsApp\Debug\jStrobe.exe"
-json_data_array = []
+# Initialize a queue for inter-thread communication
+message_queue = queue.Queue()
 
 def process_incoming_json(json_string):
     try:
         parsed_data = json.loads(json_string)
-        json_data_array.append(parsed_data)
-        update_plot(parsed_data)
+        message_queue.put(parsed_data)  # Put parsed data into the queue for processing
     except json.JSONDecodeError:
         print("Invalid JSON string")
 
@@ -26,45 +26,29 @@ def initialize_plot():
     ax.set_xlabel('Number of Trucks')
     ax.set_ylabel('Unit Cost ($/Lcy)')
     ax.set_title('Plot of Unit Cost vs Number of Trucks')
-
     plt.show()
 
 def update_plot(entry):
-    """Updates the plot with new data from a JSON object."""
     numExc = entry["ExcWt.CurCount"]
     numTruck = entry["TrkWt.CurCount"]
     SimTime = entry["SimTime"]
-
-    # Calculate the metric to plot
-    custom_metric = (numTruck*1000+numExc*1000+((numTruck * 250 + numExc * 300) *SimTime/60))/15000
-
-    # Initialize the series if it doesn't exist
+    custom_metric = (numTruck * 1000 + numExc * 1000 + ((numTruck * 250 + numExc * 300) * SimTime / 60)) / 15000
     if numExc not in series_data:
         series_data[numExc] = ([], [])  # (numTruck values, custom_metric values)
-
-    # Append values to the respective series
     series_data[numExc][0].append(numTruck)
     series_data[numExc][1].append(custom_metric)
-
-    # Clear the axis to redraw
     ax.clear()
     ax.set_xlabel('Number of Trucks')
     ax.set_ylabel('Unit Cost ($/Lcy)')
     ax.set_title('Plot of Unit Cost vs Number of Trucks')
-
-    # Plotting the data
     for numExc, (numTruck_values, custom_metrics) in series_data.items():
         ax.plot(numTruck_values, custom_metrics, marker='o', label=f'numExc = {numExc}')
-
     ax.legend()
     plt.draw()
-    plt.pause(0.1)  # Pause to allow the plot to update
 
-# Example usage
-
+# Initialize
 initialize_plot()
-manager = ProcessManager()#path_to_exe)
-
+manager = ProcessManager(process_incoming_json)
 
 try:
     message = "LOAD C:/Users/Joseph/Desktop/EarthMoving.jstrx;"
@@ -84,14 +68,19 @@ try:
     communication_complete = False
 
     while not communication_complete:
-        response = manager.read_messages()
-        if response:
-            if "COMPLETE" in response:
-                communication_complete = True
-            else:
-                process_incoming_json(response)
-        else:
-            time.sleep(0.1)  # Sleep briefly to avoid busy waiting
+        # Check for messages in the queue and update the plot if available
+        try:
+            while not message_queue.empty():
+                entry = message_queue.get_nowait()  # Non-blocking
+                update_plot(entry)
+
+        except Exception as e:
+            print(f"Error updating plot: {e}")
+
+        try:
+            plt.pause(0.1)  # Pause briefly to allow the plot to update
+        except Exception as e:
+            print(f"Error during plt.pause: {e}")
 
 finally:
     plt.ioff()  
