@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>67e0d5ec-c790-4b46-999f-8b5ff3732e63</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MinUnit3.py</StartupFile>
+    <StartupFile>ExtDuration.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ExtDuration.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MinUnit3.py">
       <SubType>Code</SubType>
     </Compile>

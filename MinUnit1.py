@@ -32,7 +32,7 @@ def update_plot(entry):
     numExc = entry["ExcWt.CurCount"]
     numTruck = entry["TrkWt.CurCount"]
     SimTime = entry["SimTime"]
-    custom_metric = (numTruck * 1000 + numExc * 1000 + ((numTruck * 250 + numExc * 300) * SimTime / 60)) / 15000
+    custom_metric = (numTruck * 1000 + numExc * 1000 + ((numTruck * 250 + numExc * 300) * SimTime / 60)) / 15000 #unit cost in $/cy
     if numExc not in series_data:
         series_data[numExc] = ([], [])  # (numTruck values, custom_metric values)
     series_data[numExc][0].append(numTruck)
