@@ -10,12 +10,15 @@ endFlag=False
 def returnDur(request):
     global ctr
     global endFlag
+    print(request)
     if request == "GetDuration":
         str=numbers[ctr]
         ctr=ctr+1;
         if ctr==4:
             endFlag=True
         return str
+       
+
 manager = ProcessManager(callback=returnDur)
 try:
     message = "LOAD C:/Users/Joseph/Desktop/TestCommunication.jstrx;"
