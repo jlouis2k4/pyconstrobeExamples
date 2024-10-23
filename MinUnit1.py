@@ -3,7 +3,7 @@
 import json
 import textwrap
 import matplotlib.pyplot as plt
-from jsPy import ProcessManager
+from pyJStrobe import ProcessManager
 import queue
 import time
 

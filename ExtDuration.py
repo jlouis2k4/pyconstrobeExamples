@@ -1,5 +1,5 @@
 import textwrap
-from jsPy import ProcessManager
+from pyJStrobe import ProcessManager
 import queue
 import time
 
