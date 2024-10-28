@@ -21,7 +21,7 @@ def returnDur(request):
 
 manager = ProcessManager(callback=returnDur)
 try:
-    message = "LOAD C:/Users/Joseph/Desktop/TestCommunication.jstrx;"
+    message = "LOAD TestCommunication.jstrx;"
     manager.write_message(message)
     message = textwrap.dedent(f"""\
     SETANIMATE true;

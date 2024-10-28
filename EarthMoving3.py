@@ -75,7 +75,7 @@ initialize_plot()
 manager = ProcessManager(process_incoming_json)
 
 try:
-    message = "LOAD C:/Users/Joseph/Desktop/EarthMoving.jstrx;"
+    message = "LOAD EarthMoving.jstrx;"
     manager.write_message(message)
     previous_best = 6
     for i in range(2, 10):
