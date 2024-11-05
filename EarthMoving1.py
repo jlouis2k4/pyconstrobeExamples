@@ -1,5 +1,4 @@
-# main.py
-
+import os
 import json
 import textwrap
 import matplotlib.pyplot as plt
@@ -51,8 +50,8 @@ initialize_plot()
 manager = ProcessManager(process_incoming_json)
 
 try:
-    #message = "LOAD C:/Users/Joseph/Desktop/EarthMoving.jstrx;"
-    message = "LOAD EarthMoving.jstrx;"
+    full_path=os.path.join(os.getcwd(),"EarthMoving.jstrx")
+    message = f"LOAD {full_path};"
     manager.write_message(message)
     for i in range(2, 4):
         for j in range(6, 40, 2):
@@ -65,23 +64,18 @@ try:
             GETRESULTS;
             RESETMODEL;""")
             manager.write_message(message)
+            communication_complete = False
+            while not communication_complete:
+                if not message_queue.empty():
+                    entry = message_queue.get_nowait()  # Non-blocking
+                    update_plot(entry)
+                    communication_complete = True
+            try:
+                plt.pause(0.1)
+            except Exception as e:
+                print(f"Error updating plot: {e}")
+    
     manager.write_message("CLOSE;")
-    communication_complete = False
-
-    while not communication_complete:
-        # Check for messages in the queue and update the plot if available
-        try:
-            while not message_queue.empty():
-                entry = message_queue.get_nowait()  # Non-blocking
-                update_plot(entry)
-
-        except Exception as e:
-            print(f"Error updating plot: {e}")
-
-        try:
-            plt.pause(0.1)  # Pause briefly to allow the plot to update
-        except Exception as e:
-            print(f"Error during plt.pause: {e}")
 
 finally:
     plt.ioff()  

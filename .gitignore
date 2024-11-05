@@ -46,6 +46,7 @@ Thumbs.db
 # IDE-specific files
 .vscode/
 .idea/
+.vs/
 .vs/                   # Ignore Visual Studio directory
 *.suo                  # Ignore Visual Studio Solution User Options files
 .suo

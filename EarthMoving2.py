@@ -1,5 +1,5 @@
 # main.py
-
+import os
 import json
 import textwrap
 import matplotlib.pyplot as plt
@@ -75,10 +75,12 @@ initialize_plot()
 manager = ProcessManager(process_incoming_json)
 
 try:
-    message = "LOAD EarthMoving.jstrx;"
+    full_path=os.path.join(os.getcwd(),"EarthMoving.jstrx")
+    message = f"LOAD {full_path};"
     manager.write_message(message)
-    for i in range(2, 4):
-        for j in range(6, 40, 2):
+    previous_best = 6
+    for i in range(2, 10):
+        for j in range(previous_best, 40, 2):
             message = textwrap.dedent(f"""\
             SETANIMATE false;
             SETATTRIBUTE Soil InitialContent 15000;
@@ -90,6 +92,7 @@ try:
             manager.write_message(message)
             communication_complete = False
             breakFlag = False
+           
             while not communication_complete:
                 if not message_queue.empty():
                     entry = message_queue.get_nowait()
@@ -102,6 +105,7 @@ try:
             except Exception as e:
                 print(f"Error during plt.pause: {e}")
             if breakFlag: 
+                previous_best=j-6;
                 break
             else:
                 continue

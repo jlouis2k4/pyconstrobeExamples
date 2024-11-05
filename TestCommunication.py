@@ -1,3 +1,4 @@
+import os
 import textwrap
 from pyJStrobe import ProcessManager
 import queue
@@ -21,7 +22,8 @@ def returnDur(request):
 
 manager = ProcessManager(callback=returnDur)
 try:
-    message = "LOAD TestCommunication.jstrx;"
+    full_path=os.path.join(os.getcwd(),"TestCommunication.jstrx")
+    message = f"LOAD {full_path};"
     manager.write_message(message)
     message = textwrap.dedent(f"""\
     SETANIMATE true;
