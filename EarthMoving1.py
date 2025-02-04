@@ -2,7 +2,7 @@ import os
 import json
 import textwrap
 import matplotlib.pyplot as plt
-from pyJStrobe import ProcessManager
+from pyconstrobe import ProcessManager
 import queue
 import time
 

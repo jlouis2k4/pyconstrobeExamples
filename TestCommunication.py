@@ -1,6 +1,6 @@
 import os
 import textwrap
-from pyJStrobe import ProcessManager
+from pyconstrobe import ProcessManager
 import queue
 import time
 
