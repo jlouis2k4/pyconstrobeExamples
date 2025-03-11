@@ -10,7 +10,7 @@ import time
 # Initialize a queue for inter-thread communication
 message_queue = queue.Queue()
 
-def process_incoming_json(json_string):
+def process_incoming_json(type,json_string):
     try:
         parsed_data = json.loads(json_string)
         message_queue.put(parsed_data)  # Put parsed data into the queue for processing
@@ -82,14 +82,17 @@ try:
     for i in range(2, 10):
         for j in range(previous_best, 40, 2):
             message = textwrap.dedent(f"""\
+            RESETMODEL;
             SETANIMATE false;
             SETATTRIBUTE Soil InitialContent 15000;
             SETATTRIBUTE ExcWt InitialContent {i};
             SETATTRIBUTE TrkWt InitialContent {j};
-            RUNMODEL;
-            GETRESULTS;
-            RESETMODEL;""")
+            RUNMODEL;""")
             manager.write_message(message)
+            manager.finishRunFlag = False
+            while manager.finishRunFlag==False:
+                time.sleep(0.1)
+            manager.write_message("GETRESULTS;")
             communication_complete = False
             breakFlag = False
            
