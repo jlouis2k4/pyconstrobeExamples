@@ -1,11 +1,12 @@
 GENTYPE Default;
+
 COMBI Combi1;
 QUEUE Queue2 Default;
 QUEUE Queue5 Default;
 
 
-DRAWLINK Link3 Queue2 Combi1;
-RELEASELINK Link4 Combi1 Queue5;
+LINK Link3 Queue2 Combi1;
+LINK Link4 Combi1 Queue5;
 
 DURATION Combi1 GET("GetDuration");
 PRIORITY Combi1 0;
@@ -13,7 +14,7 @@ SEMAPHORE Combi1 1;
 EZINITIALCONTENT Queue2 5;
 EZINITIALCONTENT Queue5 0;
 
-ENOUGH Link3 PredNode.CurCount;
+ENOUGH Link3 CurCount;
 DRAWUNTIL Link3 nDraws;
 DRAWAMT Link3 1;
 DRAWORDER Link3 1;
@@ -35,11 +36,18 @@ RELEASEORDER Link4 1;
 RELEASEWHERE Link4 1;
 STRENGTH Link4 1;
 
+RANDOMSEED true;
+SEED 0;
+STREAMS 0;
+NUMRUNS 1;
+ENDCOND SimTime>=100000;
+
 /<CODE>
-ONSTART Combi1 PRINT trace "Combi1 Started and has duration = %f!" Combi1.Duration;
+ONSTART Combi1 PRINT trace "Combi1 Started and has duration = {Combi1.Duration}";
 /<CODE>
-POSLINK Link3 0 16 0 0;
-POSLINK Link4 17 8 0 0;
+
+POSLINK Link3 0 16;
+POSLINK Link4 17 8;
 POSNODE Combi1 180 110;
 POSNODE Queue2 50 110;
 POSNODE Queue5 320 110;
