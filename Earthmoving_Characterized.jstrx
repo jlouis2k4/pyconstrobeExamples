@@ -2,6 +2,7 @@ GENTYPE Default;
 COMPTYPE Excavator;
 GENTYPE Soil;
 COMPTYPE Truck;
+
 COMBI Dump;
 QUEUE DumpPile Soil;
 QUEUE ExcWt Excavator;
@@ -13,16 +14,16 @@ QUEUE TrkWt Truck;
 QUEUE WtDump Truck;
 
 
-DRAWLINK Link11 WtDump Dump;
-RELEASELINK Link14 Dump Return Truck;
-RELEASELINK Link15 Return TrkWt;
-DRAWLINK Link18 StockPile Load;
-RELEASELINK Link19 Dump DumpPile;
-RELEASELINK Link20 Load ExcWt;
-DRAWLINK Link4 ExcWt Load;
-DRAWLINK Link5 TrkWt Load;
-RELEASELINK Link7 Load Haul Truck;
-RELEASELINK Link9 Haul WtDump;
+LINK Link11 WtDump Dump;
+LINK Link14 Dump Return Truck;
+LINK Link15 Return TrkWt;
+LINK Link18 StockPile Load;
+LINK Link19 Dump DumpPile;
+LINK Link20 Load ExcWt;
+LINK Link4 ExcWt Load;
+LINK Link5 TrkWt Load;
+LINK Link7 Load Haul Truck;
+LINK Link9 Haul WtDump;
 
 DURATION Dump 1;
 PRIORITY Dump 0;
@@ -38,7 +39,7 @@ EZINITIALCONTENT StockPile 1500;
 EZINITIALCONTENT TrkWt 5;
 EZINITIALCONTENT WtDump 0;
 
-ENOUGH Link11 PredNode.CurCount;
+ENOUGH Link11 CurCount;
 DRAWUNTIL Link11 nDraws;
 DRAWAMT Link11 1;
 DRAWORDER Link11 1;
@@ -71,7 +72,7 @@ RELEASEORDER Link15 1;
 RELEASEWHERE Link15 1;
 STRENGTH Link15 1;
 
-ENOUGH Link18 PredNode.CurCount>=15;
+ENOUGH Link18 CurCount>=15;
 DRAWUNTIL Link18 nDraws;
 DRAWAMT Link18 15;
 DRAWORDER Link18 1;
@@ -104,7 +105,7 @@ RELEASEORDER Link20 1;
 RELEASEWHERE Link20 1;
 STRENGTH Link20 1;
 
-ENOUGH Link4 PredNode.CurCount;
+ENOUGH Link4 CurCount;
 DRAWUNTIL Link4 nDraws;
 DRAWAMT Link4 1;
 DRAWORDER Link4 1;
@@ -115,7 +116,7 @@ RELEASEORDER Link4 1;
 RELEASEWHERE Link4 1;
 STRENGTH Link4 1;
 
-ENOUGH Link5 PredNode.CurCount;
+ENOUGH Link5 CurCount;
 DRAWUNTIL Link5 nDraws;
 DRAWAMT Link5 1;
 DRAWORDER Link5 1;
@@ -148,25 +149,29 @@ RELEASEORDER Link9 1;
 RELEASEWHERE Link9 1;
 STRENGTH Link9 1;
 
+RANDOMSEED true;
+SEED 0;
+STREAMS 0;
+NUMRUNS 1;
+ENDCOND SimTime>=100000;
+
 /<CODE>
-ONSTART Load POST "Truck%d start to Load at Time = %f" Load.Truck.ResNum SimTime;
-
-ONSTART Haul POST "Truck%d start to Haul at Time = %f" Haul.Truck.ResNum SimTime;
-
-ONSTART Dump POST "Truck%d start to Dump at Time = %f" Dump.Truck.ResNum SimTime;
-
-ONSTART Return POST "Truck%d start to Return at Time = %f" Return.Truck.ResNum SimTime;
+ONSTART Load POST "Truck{Load.Truck.ResNum} start to Load at Time = {SimTime}";
+ONSTART Haul POST "Truck{Haul.Truck.ResNum} start to Haul at Time = {SimTime}";
+ONSTART Dump POST "Truck{Dump.Truck.ResNum} start to Dump at Time = {SimTime}";
+ONSTART Return POST "Truck{Return.Truck.ResNum} start to Return at Time = {SimTime}";
 /<CODE>
-POSLINK Link11 0 16 0 0;
-POSLINK Link14 7 17 0 0;
-POSLINK Link15 16 0 0 0;
-POSLINK Link18 4 6 0 0;
-POSLINK Link19 6 4 0 0;
-POSLINK Link20 18 4 0 0;
-POSLINK Link4 0 16 0 0;
-POSLINK Link5 12 7 0 0;
-POSLINK Link7 17 16 0 0;
-POSLINK Link9 17 8 0 0;
+
+POSLINK Link11 0 16;
+POSLINK Link14 7 17;
+POSLINK Link15 16 0;
+POSLINK Link18 4 6;
+POSLINK Link19 6 4;
+POSLINK Link20 18 4;
+POSLINK Link4 0 16;
+POSLINK Link5 12 7;
+POSLINK Link7 17 16;
+POSLINK Link9 17 8;
 POSNODE Dump 420 110;
 POSNODE DumpPile 420 40;
 POSNODE ExcWt 80 110;

@@ -12,17 +12,18 @@ endFlag=False
 def MessageReceived(type,message):
     global ctr
     global endFlag    
-    print(message)
     if type == "TRACE":
         print(message)
     elif type == "POST":
+        print(message)
+    elif type == "SIMSTATE":
         print(message)
     elif type == "GET":
         return 0
 
 manager = ProcessManager(callback=MessageReceived)
 try:
-    full_path=os.path.join(os.getcwd(),"Earthmoving_Characterized.jstrx")
+    full_path=os.path.join(os.getcwd(),"SimState.jstrx")
     message = f"LOAD {full_path};"
     manager.write_message(message)
     message = textwrap.dedent(f"""\
@@ -33,4 +34,4 @@ try:
         time.sleep(0.1)
     manager.write_message("CLOSE;")
 finally:
-    exitCode = manager.stop()
+    exitCode = manager.cleanup()

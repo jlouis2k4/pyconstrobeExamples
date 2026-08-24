@@ -40,4 +40,4 @@ try:
         time.sleep(0.1)
     manager.write_message("CLOSE;")
 finally:
-    exitCode = manager.cleanup()
+    exitCode = manager.stop()

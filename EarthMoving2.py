@@ -121,4 +121,4 @@ try:
 finally:
     plt.ioff()  
     plt.show()  
-    exitCode = manager.cleanup()
+    exitCode = manager.stop()
