@@ -1,6 +1,14 @@
 import os
 import json
 import textwrap
+try:
+    import tkinter
+except ImportError:
+    raise RuntimeError(
+        "Tkinter is required to display interactive plots.\n"
+        "On Ubuntu/Debian, install it with:\n"
+        "    sudo apt install python3-tk"
+    )
 import matplotlib.pyplot as plt
 from pyconstrobe import ProcessManager
 import queue
@@ -10,6 +18,7 @@ import time
 message_queue = queue.Queue()
 
 def process_incoming_json(type, json_string):
+    print(json_string)
     try:
         parsed_data = json.loads(json_string)
         message_queue.put(parsed_data)  # Put parsed data into the queue for processing

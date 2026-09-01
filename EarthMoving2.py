@@ -2,6 +2,14 @@
 import os
 import json
 import textwrap
+try:
+    import tkinter
+except ImportError:
+    raise RuntimeError(
+        "Tkinter is required to display interactive plots.\n"
+        "On Ubuntu/Debian, install it with:\n"
+        "    sudo apt install python3-tk"
+    )
 import matplotlib.pyplot as plt
 from pyconstrobe import ProcessManager
 import queue
