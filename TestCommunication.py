@@ -3,7 +3,7 @@ import textwrap
 from pyconstrobe import ProcessManager
 import queue
 import time
-import debugpy
+
 
 numbers = ["1", "2", "3", "4", "5","6","7"]
 ctr=0
@@ -22,7 +22,7 @@ def returnDur(type,message):
         return response_str  # This is sent by `read_messages()`
 
        
-debugpy.breakpoint()
+
 manager = ProcessManager(callback=returnDur)
 try:
     full_path=os.path.join(os.getcwd(),"TestCommunication.jstrx")
